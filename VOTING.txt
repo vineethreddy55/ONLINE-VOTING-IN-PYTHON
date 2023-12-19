@@ -1,0 +1,63 @@
+#inclass Candidate:
+    def __init__(self, name):
+        self.name = name
+        self.votes = 0
+
+class VotingSystem:
+    def __init__(self):
+        self.candidates = []
+        self.voters = set()
+
+    def add_candidate(self, name):
+        candidate = Candidate(name)
+        self.candidates.append(candidate)
+        print(f"Candidate {name} added successfully.")
+
+    def display_candidates(self):
+        print("List of Candidates:")
+        for i, candidate in enumerate(self.candidates, start=1):
+            print(f"{i}. {candidate.name}")
+
+    def vote(self, voter_id, candidate_index):
+        if voter_id in self.voters:
+            print("You have already voted.")
+        elif 1 <= candidate_index <= len(self.candidates):
+            candidate = self.candidates[candidate_index - 1]
+            candidate.votes += 1
+            self.voters.add(voter_id)
+            print(f"Vote for {candidate.name} recorded successfully.")
+        else:
+            print("Invalid candidate index.")
+
+    def display_results(self):
+        print("Election Results:")
+        for candidate in self.candidates:
+            print(f"{candidate.name}: {candidate.votes} votes")
+
+def main():
+    voting_system = VotingSystem()
+
+    while True:
+        print("\n1. Add Candidate\n2. Display Candidates\n3. Vote\n4. Display Results\n5. Exit")
+        choice = int(input("Enter your choice: "))
+
+        if choice == 1:
+            name = input("Enter candidate name: ")
+            voting_system.add_candidate(name)
+        elif choice == 2:
+            voting_system.display_candidates()
+        elif choice == 3:
+            voter_id = int(input("Enter your voter ID: "))
+            voting_system.display_candidates()
+            candidate_index = int(input("Enter the index of the candidate you want to vote for: "))
+            voting_system.vote(voter_id, candidate_index)
+        elif choice == 4:
+            voting_system.display_results()
+        elif choice == 5:
+            print("Exiting the voting system.")
+            break
+        else:
+            print("Invalid choice. Please enter a valid option.")
+
+if __name__ == "__main__":
+    main()
